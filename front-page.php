@@ -93,13 +93,14 @@ $fallback_works = array(
                 </div>
             </div>
 
+            <p class="fv-vertical">想いを伝える<span class="is-gold">、</span>WEB制作<span class="is-gold">。</span></p>
+
             <div class="fv-side">
                 <div class="fv-lead">
                     <p>専門用語は使いません。<br>まずは、あなたの事業への想いを<br>じっくり聞かせてください。</p>
                     <p>「丸め込まれそう」という不安も、<br>「作って終わり」の心配も、<br>対話を重ねながら解消していきます。</p>
                     <p>あなたの事業の歩幅に合わせて、<br>聞くことから丁寧に設計し、<br>公開したあとの集客まで伴走します。</p>
                 </div>
-                <p class="fv-vertical">想いを伝える<span class="is-gold">、</span>WEB制作<span class="is-gold">。</span></p>
                 <div class="fv-subs">
                     <?php
                     $subs = array(

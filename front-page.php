@@ -93,8 +93,6 @@ $fallback_works = array(
                 </div>
             </div>
 
-            <p class="fv-vertical">想いを伝える<span class="is-gold">、</span>WEB制作<span class="is-gold">。</span></p>
-
             <div class="fv-side">
                 <div class="fv-lead">
                     <p>専門用語は使いません。<br>まずは、あなたの事業への想いを<br>じっくり聞かせてください。</p>
@@ -120,6 +118,8 @@ $fallback_works = array(
                     <?php endforeach; ?>
                 </div>
             </div>
+
+            <p class="fv-vertical">想いを伝える<span class="is-gold">、</span><br>WEB制作<span class="is-gold">。</span></p>
         </div>
     </section>
 

@@ -28,7 +28,7 @@ get_header();
             $is_official_work = get_post_field('post_name', get_the_ID()) === 'ashika-works-official'
                 || mb_strpos(get_the_title(), 'Ashika Works 公式Webサイト') !== false;
             if ((!is_string($figma_url) || $figma_url === '') && $is_official_work) {
-                $figma_url = 'https://www.figma.com/design/3lnRP1ZGQuCuAq9FpKzqOH/ashika_hp?node-id=0-1&t=90GTW43Q8r49wpiE-1';
+                $figma_url = 'https://www.figma.com/design/3InRP1ZGQuCuAq9FpKzqOH/ashika_hp?node-id=0-1&t=uF4rJP3SmR9grl44-1';
             }
             if (is_string($figma_url) && $figma_url !== '') :
                 ?>

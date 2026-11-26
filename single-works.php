@@ -25,6 +25,11 @@ get_header();
             </div>
             <?php
             $figma_url = get_post_meta(get_the_ID(), 'figma_url', true);
+            $is_official_work = get_post_field('post_name', get_the_ID()) === 'ashika-works-official'
+                || mb_strpos(get_the_title(), 'Ashika Works 公式Webサイト') !== false;
+            if ((!is_string($figma_url) || $figma_url === '') && $is_official_work) {
+                $figma_url = 'https://www.figma.com/design/3lnRP1ZGQuCuAq9FpKzqOH/ashika_hp?node-id=0-1&t=90GTW43Q8r49wpiE-1';
+            }
             if (is_string($figma_url) && $figma_url !== '') :
                 ?>
                 <div class="works-figma">

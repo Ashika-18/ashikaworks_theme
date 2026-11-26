@@ -58,8 +58,8 @@ $footer_image = ashika_image_uri('footer.jpg');
             <nav aria-label="サポート">
                 <p class="footer-label">Support</p>
                 <ul>
-                    <li><a href="<?php echo esc_url(home_url('/#flow')); ?>">制作の流れ</a></li>
-                    <li><a href="<?php echo esc_url(ashika_page_url('faq', home_url('/#contact'))); ?>">よくある質問</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/flow/')); ?>">制作の流れ</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/faq/')); ?>">よくある質問</a></li>
                     <li><a href="<?php echo esc_url(ashika_contact_url()); ?>">無料相談</a></li>
                 </ul>
             </nav>

@@ -28,6 +28,12 @@ get_header();
             <div class="entry-content">
                 <?php the_content(); ?>
             </div>
+            <?php if (is_page(array('promise-dialogue', 'promise-design', 'promise-support', 'flow', 'faq'))) : ?>
+                <div class="page-cta">
+                    <a class="button button-gold" href="<?php echo esc_url(ashika_line_url()); ?>" target="_blank" rel="noopener noreferrer">まずはLINEで無料相談する</a>
+                    <a class="page-back" href="<?php echo esc_url(home_url('/')); ?>">トップページへ戻る</a>
+                </div>
+            <?php endif; ?>
         </article>
     <?php endwhile; ?>
 </main>

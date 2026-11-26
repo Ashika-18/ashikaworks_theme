@@ -41,6 +41,67 @@ add_action('after_switch_theme', function () {
 
 add_action('init', 'ashika_register_works');
 
+function ashika_register_figma_url_meta() {
+    register_post_meta('works', 'figma_url', array(
+        'type'              => 'string',
+        'single'            => true,
+        'show_in_rest'      => true,
+        'sanitize_callback' => 'esc_url_raw',
+        'auth_callback'     => function () {
+            return current_user_can('edit_posts');
+        },
+    ));
+}
+
+add_action('init', 'ashika_register_figma_url_meta');
+
+function ashika_figma_url_meta_box() {
+    add_meta_box(
+        'ashika-figma-url',
+        'カスタムフィールド',
+        'ashika_figma_url_meta_box_html',
+        'works',
+        'normal',
+        'high'
+    );
+}
+
+add_action('add_meta_boxes_works', 'ashika_figma_url_meta_box');
+
+function ashika_figma_url_meta_box_html($post) {
+    wp_nonce_field('ashika_figma_url', 'ashika_figma_url_nonce');
+    $url = get_post_meta($post->ID, 'figma_url', true);
+    ?>
+    <p>
+        <label for="figma_url"><strong>Figma設計データURL（figma_url）</strong></label>
+    </p>
+    <input type="text" class="widefat" id="figma_url" name="figma_url" value="<?php echo esc_attr($url); ?>" placeholder="https://www.figma.com/design/...">
+    <p class="description">入力した実績だけ、詳細ページに閲覧用ボタンを表示します。空にするとボタンは出ません。</p>
+    <?php
+}
+
+function ashika_save_figma_url($post_id) {
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (!isset($_POST['ashika_figma_url_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ashika_figma_url_nonce'])), 'ashika_figma_url')) {
+        return;
+    }
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    $url = isset($_POST['figma_url']) ? esc_url_raw(wp_unslash($_POST['figma_url'])) : '';
+    if ($url === '') {
+        delete_post_meta($post_id, 'figma_url');
+        return;
+    }
+
+    update_post_meta($post_id, 'figma_url', $url);
+}
+
+add_action('save_post_works', 'ashika_save_figma_url');
+
 function ashika_register_works() {
     register_post_type('works', array(
         'labels' => array(
@@ -63,7 +124,7 @@ function ashika_register_works() {
         'menu_icon'    => 'dashicons-portfolio',
         'menu_position'=> 5,
         'show_in_rest' => true,
-        'supports'     => array('title', 'editor', 'thumbnail', 'excerpt'),
+        'supports'     => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
     ));
 }
 

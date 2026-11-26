@@ -26,14 +26,17 @@ $strengths = array(
     array(
         'title' => '専門用語を使わない丁寧な対話',
         'text'  => '聞き慣れない言葉は、その場で言い換えます。強みも伝えたいことも、いつもの言葉で整理してから形にします。',
+        'slug'  => 'promise-dialogue',
     ),
     array(
         'title' => '既製品ではない完全オリジナル設計',
         'text'  => 'ひな形の色を変えるだけにはしません。お客さんの動きに合わせ、順番も見た目も一から組み立てます。',
+        'slug'  => 'promise-design',
     ),
     array(
         'title' => '公開後の運用・集客まで伴走',
         'text'  => '公開の日がゴールではありません。文章の直し方も、地域に知ってもらう動きも、続けられる形で支えます。',
+        'slug'  => 'promise-support',
     ),
 );
 
@@ -163,7 +166,7 @@ $fallback_works = array(
                     </figure>
                     <h3><?php echo esc_html($item['title']); ?></h3>
                     <p><?php echo esc_html($item['text']); ?></p>
-                    <a class="button button-navy" href="<?php echo esc_url(ashika_contact_url()); ?>">詳しく見る</a>
+                    <a class="button button-navy" href="<?php echo esc_url(ashika_page_url($item['slug'], home_url('/' . $item['slug'] . '/'))); ?>">詳しく見る</a>
                 </article>
             <?php endforeach; ?>
         </div>
@@ -191,7 +194,7 @@ $fallback_works = array(
                                 <?php endif; ?>
                             </figure>
                             <h3><?php the_title(); ?></h3>
-                            <p><?php echo esc_html(ashika_post_summary(get_the_ID(), 42)); ?></p>
+                            <p><?php echo esc_html(has_excerpt() ? get_the_excerpt() : ashika_post_summary(get_the_ID(), 80)); ?></p>
                         </a>
                     </article>
                 <?php endwhile; ?>

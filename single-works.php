@@ -23,6 +23,15 @@ get_header();
             <div class="entry-content">
                 <?php the_content(); ?>
             </div>
+            <?php
+            $figma_url = get_post_meta(get_the_ID(), 'figma_url', true);
+            if (is_string($figma_url) && $figma_url !== '') :
+                ?>
+                <div class="works-figma">
+                    <p class="works-figma-note">設計段階のデザインカンプも公開しています（ブラウザでの見やすさに合わせて調整・WordPress化しました）</p>
+                    <a class="works-figma-button" href="<?php echo esc_url($figma_url); ?>" target="_blank" rel="noopener noreferrer">実際のFigma設計データを見る（閲覧専用・PC推奨） ↗</a>
+                </div>
+            <?php endif; ?>
             <p class="section-action">
                 <a class="button button-navy" href="<?php echo esc_url(get_post_type_archive_link('works')); ?>">実績一覧へ戻る</a>
             </p>

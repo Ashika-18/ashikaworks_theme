@@ -528,11 +528,19 @@ a {
   line-height: 1.7;
 }
 
+.works-figma-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
 .works-figma-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-top: 16px;
+  max-width: 100%;
   padding: 14px 32px;
   border: 1.5px solid #1b365d;
   border-radius: 999px;

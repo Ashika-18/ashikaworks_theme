@@ -41,19 +41,23 @@ add_action('after_switch_theme', function () {
 
 add_action('init', 'ashika_register_works');
 
-function ashika_register_figma_url_meta() {
-    register_post_meta('works', 'figma_url', array(
+function ashika_register_works_url_meta() {
+    $auth = function () {
+        return current_user_can('edit_posts');
+    };
+    $args = array(
         'type'              => 'string',
         'single'            => true,
         'show_in_rest'      => true,
         'sanitize_callback' => 'esc_url_raw',
-        'auth_callback'     => function () {
-            return current_user_can('edit_posts');
-        },
-    ));
+        'auth_callback'     => $auth,
+    );
+
+    register_post_meta('works', 'figma_url', $args);
+    register_post_meta('works', 'site_url', $args);
 }
 
-add_action('init', 'ashika_register_figma_url_meta');
+add_action('init', 'ashika_register_works_url_meta');
 
 function ashika_figma_url_meta_box() {
     add_meta_box(
@@ -70,12 +74,18 @@ add_action('add_meta_boxes_works', 'ashika_figma_url_meta_box');
 
 function ashika_figma_url_meta_box_html($post) {
     wp_nonce_field('ashika_figma_url', 'ashika_figma_url_nonce');
-    $url = get_post_meta($post->ID, 'figma_url', true);
+    $figma_url = get_post_meta($post->ID, 'figma_url', true);
+    $site_url = get_post_meta($post->ID, 'site_url', true);
     ?>
+    <p>
+        <label for="site_url"><strong>公開サイトURL（site_url）</strong></label>
+    </p>
+    <input type="text" class="widefat" id="site_url" name="site_url" value="<?php echo esc_attr($site_url); ?>" placeholder="https://example.com/">
+    <p class="description">入力した実績だけ、詳細ページに「実際のサイトを見る」ボタンを表示します。空にすると出ません。</p>
     <p>
         <label for="figma_url"><strong>Figma設計データURL（figma_url）</strong></label>
     </p>
-    <input type="text" class="widefat" id="figma_url" name="figma_url" value="<?php echo esc_attr($url); ?>" placeholder="https://www.figma.com/design/...">
+    <input type="text" class="widefat" id="figma_url" name="figma_url" value="<?php echo esc_attr($figma_url); ?>" placeholder="https://www.figma.com/design/...">
     <p class="description">入力した実績だけ、詳細ページに閲覧用ボタンを表示します。空にするとボタンは出ません。</p>
     <?php
 }
@@ -91,13 +101,15 @@ function ashika_save_figma_url($post_id) {
         return;
     }
 
-    $url = isset($_POST['figma_url']) ? esc_url_raw(wp_unslash($_POST['figma_url'])) : '';
-    if ($url === '') {
-        delete_post_meta($post_id, 'figma_url');
-        return;
+    $fields = array('figma_url', 'site_url');
+    foreach ($fields as $field) {
+        $url = isset($_POST[$field]) ? esc_url_raw(wp_unslash($_POST[$field])) : '';
+        if ($url === '') {
+            delete_post_meta($post_id, $field);
+            continue;
+        }
+        update_post_meta($post_id, $field, $url);
     }
-
-    update_post_meta($post_id, 'figma_url', $url);
 }
 
 add_action('save_post_works', 'ashika_save_figma_url');
